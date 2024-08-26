@@ -14,7 +14,7 @@ services:
     volumes:
       - ./openvpn-data:/etc/openvpn
     environment:
-      - "OVPN_SERVER_PORT=443"
+      - "OVPN_SERVER_PORT=1194"
       - "OVPN_PROTO=tcp"
     command: ovpn_run
     restart: unless-stopped
