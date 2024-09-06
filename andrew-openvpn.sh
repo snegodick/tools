@@ -8,14 +8,14 @@ services:
     image: kylemanna/openvpn:2.4
     container_name: openvpn-server
     ports:
-      - "1194:1194/tcp"
+      - "1194:1194/udp"
     cap_add:
       - NET_ADMIN
     volumes:
       - ./openvpn-data:/etc/openvpn
     environment:
       - "OVPN_SERVER_PORT=1194"
-      - "OVPN_PROTO=tcp"
+      - "OVPN_PROTO=udp"
     command: ovpn_run
     restart: unless-stopped
 volumes:
@@ -23,7 +23,7 @@ volumes:
 EOF
 
 export ip=`curl -s -4 ifconfig.me`;
-docker-compose run --rm openvpn ovpn_genconfig -u tcp://$ip:1194 && \
+docker-compose run --rm openvpn ovpn_genconfig -u udp://$ip:1194 && \
 docker-compose run --rm -e EASYRSA_BATCH=1 openvpn ovpn_initpki nopass && \
 docker-compose up -d && \
 docker-compose run --rm openvpn easyrsa build-client-full CLIENT1 nopass && \
