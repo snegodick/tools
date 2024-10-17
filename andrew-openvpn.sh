@@ -28,5 +28,6 @@ docker-compose run --rm -e EASYRSA_BATCH=1 openvpn ovpn_initpki nopass && \
 docker-compose up -d && \
 docker-compose run --rm openvpn easyrsa build-client-full CLIENT1 nopass && \
 docker-compose run --rm openvpn ovpn_getclient CLIENT1 > CLIENT1.ovpn;
+echo "duplicate-cn" >> /root/openvpn-docker/openvpn-data/openvpn.conf && docker restart openvpn-server;
 echo '### CLIENT CONFIG ################################################################'
 cat CLIENT1.ovpn
